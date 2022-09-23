@@ -1,0 +1,264 @@
+%\documentclass{article}
+\documentclass[class=article, crop=false, 10pt, a4paper]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{setspace}   % sets the indent to 0.
+\setlength{\parindent}{0in} % Indent in paragraph
+\setlength{\parskip}{1em} % Space between paragraph
+\usepackage[document]{ragged2e} % Justify text
+\usepackage[table,xcdraw,dvipsnames]{xcolor} % Let color in table and text
+
+
+% Mate y Física
+\usepackage{siunitx} %SI units
+\usepackage{systeme}
+\usepackage{tikz}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amssymb}    % Mathematical notation
+\usepackage{mathptmx}
+\usepackage{physics}    % Physic notation
+\usepackage{mathtools}
+\usepackage{centernot}  % Not implies
+%\usepackage{diffcoeff} 
+\usepackage[b]{esvect}  % For \vv
+\usepackage{tikz}      
+\DeclareSIUnit\year{yr}
+% For arrow and dots in \xvec
+
+%Monerias
+\usepackage{graphicx}   % Include some plots (.pdf files) we need a package for that.
+\usepackage{float}      % Set figure in place
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{multicol}   % Multicol format
+\usepackage{multirow}   % For tables with multiple rows within one cell.
+\usepackage{booktabs}   % For even nicer tables.
+\usepackage{changepage}
+\usepackage{csquotes}   % Quotes
+\usepackage{hyperref}
+\usepackage[hypcap=false]{caption}    % Figure
+\usepackage{rotating}   % Rotation o images
+%\usepackage{biblatex}   % Bibliography %Comentar
+\usepackage{comment}    % Chunks of comments in Overleafs
+\usepackage{url}
+
+% Listas
+\usepackage{enumerate}
+
+% ALgoritmos
+\usepackage[ruled]{algorithm2e}
+\usepackage{algpseudocode}
+
+% Se agrega la bibliografía
+
+
+%\usepackage{biblatex}
+%\addbibresource{referencias.bib} % Se agrega la bibliografía
+%\bibliographystyle{unsrt}
+%\bibliography{referencias.bib}
+
+\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}
+\addbibresource{referencias.bib}
+
+\cfoot{\footnotesize \thepage} % Put page number in the center.
+%\usepackage{newunicodechar}
+%\newunicodechar{²}{\ensuremath{{}^2}}
+
+\pagestyle{fancy}       % Header style.
+\fancyhf{}              % Makes sure do not have other info. in header or footer.
+
+\makeatletter
+\renewcommand{\thesection}{%
+  \ifnum\c@chapter<1 \@arabic\c@section             %Remover el '0' del inicio de cada seccion
+  \else \thechapter.\@arabic\c@section
+  \fi
+}
+\makeatother
+
+
+
+
+\pagestyle{fancy}       % Header style.
+\fancyhf{}              % Makes sure do not have other info. in header or footer.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% Documento %%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\spanishdecimal{.}
+
+\input{docs/0 portada}
+\justifying
+
+\section{Problema 1}
+\justifying
+\subsection{Enunciado}
+Una empresa compra la materia prima a dos proveedores A y B, cuya calidad se 
+muestra en la tabla siguiente:
+
+\begin{table}[]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\rowcolor[HTML]{9B9B9B} 
+Piezas defectuosas & Probabilidad para el proveedor A & Probabilidad para el proveedor B \\ \hline
+1\%                & 0.80                             & 0.40                             \\ \hline
+2\%                & 0.10                             & 0.30                             \\ \hline
+3\%                & 0.10                             & 0.30                             \\ \hline
+\end{tabular}
+\end{table}
+
+
+La probabilidad de recibir un lote del proveedor A en el que haya un 1\% de piezas 
+defectuosas es del 70\%. Los pedidos que realiza la empresa ascienden a 1.000 piezas. 
+Una pieza defectuosa puede ser reparada por 1 euro. Si bien tal y como indica la tabla 
+la calidad del proveedor B es menor, éste está dispuesto a vender las 1.000 piezas por 
+10 euros menos que el proveedor A. Indique el proveedor que debe utilizar.
+
+\subsection{Procedimiento}
+
+El primer paso consiste en  identificar y enumerar las posibles alternativas de decisión para el problema, en este caso contamos con dos:
+\begin{itemize}
+    \item Proveedor A
+    \item Proveedor B
+\end{itemize}
+
+Una vez identificadas las alternativas creamos el árbol de decisión con las dos ramas principales siendo las alternativas de decisión y para cada una de ellas sus posibles estados de la naturaleza, costos asociados y probabilidades:
+
+\tikzset{
+                treenode/.style = {shape=rectangle, draw, align=center, top color=white, bottom color=white},
+                root/.style     = {treenode, bottom color=white, sibling distance=1.5cm},
+                level 1/.style = {sibling distance=3.2cm},
+                level 2/.style = {sibling distance=1.2cm},
+                dummy/.style    = {circle,draw, sibling distance = 1mm},
+                final/.style    = {sibling distance = 15cm},
+            }
+
+            \begin{figure}[!ht]
+                \centering
+                \begin{tikzpicture}[
+                    grow = right,
+                    edge from parent/.style = {draw, -latex},
+                    level distance = 3.5cm,
+                    sloped]
+                    \node [root] {€19}
+                        child{
+                            node [dummy] {€19}
+                                child{
+                                    node [final] {€30}
+                                edge from parent node [above] {$0.3$}}
+                                child{
+                                    node [final] {€20}
+                                edge from parent node [above] {$0.3$}}
+                                child{
+                                    node [final] {€10}
+                                edge from parent node [above] {$0.4$}}
+                            edge from parent node [below] {$Proveedor B$}}
+                        child{ 
+                            node [dummy] {€23}
+                                child{
+                                    node [final] {€40}
+                                edge from parent node [above] {$0.1$}}
+                                child{
+                                    node [final] {€30}
+                                edge from parent node [above] {$0.1$}}
+                                child{
+                                    node [final] {€20}
+                                edge from parent node [above] {$0.8$}}
+                        edge from parent node [above] {$Proveedor A$}};
+                \end{tikzpicture}
+                \caption{Árbol de decisión para compra de materia prima.}
+                \label{fig:tree1}
+            \end{figure}
+
+Para llegar a esta solución iniciamos llenando las probabilidades de cada escenario dentro de cada rama principal, posteriormente calculamos los costos generados por dichas probabilidades, considerando que el proveedor B genera €10 menos por 1,000 unidades vendidas. Posteriormente, calculamos el valor esperado para cada proveedor, sumando todos los productos de cada costo asociado y su respectiva probabilidad. Finalmente tomamos la decisión eligiendo la rama con menor costo, en este caso el \textbf{proveedor B}.
+
+\section{Problema 2}
+\justifying
+\subsection{Enunciado}
+El gerente de una empresa tiene dos diseños posibles para su nueva línea de cerebros 
+electrónicos, la primera opción tiene un 80\% de probabilidades de producir el 70\% de cerebros electrónicos buenos y un 20\% de probabilidades de producir el 50\% de 
+cerebros electrónicos buenos, siendo el coste de este diseño de 450.000 de euros. 
+
+La segunda opción tiene una probabilidad del 70\% de producir el 70\% de cerebros 
+electrónicos buenos y una probabilidad del 30\% de producir el 50\% de cerebros 
+electrónicos buenos, el coste de este diseño asciende a 600.000 euros. 
+
+El coste de cada cerebro electrónico es de 100 euros, si es bueno se vende por 250 euros, mientras que si es malo no tiene ningún valor. Conociendo que la previsión es de fabricar 50.000 cerebros electrónicos, decida el diseño que debe elegir el gerente de la empresa.
+
+\begin{table}[]
+\centering
+\begin{tabular}{cc}
+\hline
+\rowcolor[HTML]{9B9B9B} 
+Alternativas                   & Estados de la naturaleza                                                                                                                 \\ \hline
+\multicolumn{1}{|c|}{Diseño 1} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}70\% de cerebros electrónicos buenos\\ 50\% de cerebros electrónicos buenos\end{tabular}} \\ \hline
+\multicolumn{1}{|c|}{Diseño 2} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}70\% de cerebros electrónicos buenos\\ 50\% de cerebros electrónicos buenos\end{tabular}} \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Procedimiento}
+
+Sabemos que se desean producir 50,000 cerebros electrónicos, por lo que debemos generar el árbol de decisión con dos ramas principales con las dos opciones de diseño. Posteriormente, calcularemos el beneficio de cada estado de la naturaleza, para luego calcular el valor esperado del beneficio para cada diseño.
+
+
+        \tikzset{
+            treenode/.style = {shape=rectangle, draw, align=center, top color=white, bottom color=white},
+            root/.style     = {treenode, bottom color=white, sibling distance=1cm},
+            level 1/.style = {sibling distance=3.5cm},
+            level 2/.style = {sibling distance=1.5cm},
+            dummy/.style    = {circle,draw, sibling distance = 1mm},
+            final/.style    = {sibling distance = 10cm},
+        }
+
+        \begin{figure}[!ht]
+            \centering
+            \begin{tikzpicture}[
+                grow = right,
+                edge from parent/.style = {draw, -latex},
+                level distance = 5cm,
+                sloped]
+                \node [root] {2,800,000}
+                    child{
+                        node [dummy] {2,400,000}
+                        child{
+                            node [final] {650,000}
+                            edge from parent node [below]{$P(50\% B) = 0.3$}
+                            }
+                        child{
+                            node [final] {3,150,000}
+                            edge from parent node [above]{$P(70\% B) = 0.7$}
+                            }
+                        edge from parent node [below]{Diseño 2}
+                        }
+                    child{
+                        node [dummy] {2,800,000}
+                        child{
+                            node [final] {800,000}
+                            edge from parent node [below]{$P(50\% B) = 0.2$}
+                        }
+                        child{
+                            node [final] {3,300,000}
+                            edge from parent node [above]{$P(70\% B) = 0.8$}
+                        }
+                        edge from parent node [above]{Diseño 1}
+                    }
+                ;
+            \end{tikzpicture}
+            \caption{Árbol de decisión para diseño de cerebros electrónicos.}
+            \label{fig:arbol2}
+        \end{figure}
+        
+        Para llegar a este resultado se calcula la ganancia que se obtiene para cada estado de la naturaleza, para ello se calcula la utilidad como la cantidad de de cerebros buenos (asociado a un porcentaje p) por la cantidad que se gana por unidad (€250), todo ello menos los costos por unidad (€100) menos los costos fijos de ese diseño en particular. De esta forma obtenemos la ganancia para cada estado, posteriormente calculamos el valor esperado para cada diseño y obtuvimos que el diseño con mayor ganancias (€2,800,000) es el \textbf{diseño 1}.
+
+
+\end{document}
